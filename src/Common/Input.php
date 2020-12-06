@@ -2,6 +2,8 @@
 
 namespace Nessworthy\AoC2020\Common;
 
+use Generator;
+
 class Input
 {
 
@@ -9,7 +11,7 @@ class Input
     {
     }
 
-    public function readLine(): \Generator
+    public function readLine(): Generator
     {
         $res = fopen($this->filePath, 'rb+');
         while ($line = fgets($res)) {
