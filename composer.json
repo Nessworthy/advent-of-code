@@ -1,0 +1,20 @@
+{
+  "name": "nessworthy/aoc-2020",
+  "description": "Repo for my Advent of Code 2020 Days",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Sean Nessworthy",
+      "email": "sean@nessworthy.me"
+    }
+  ],
+  "require": {
+    "rdlowrey/auryn": "^1.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "\\Nessworthy\\AoC2020\\": "src/"
+    }
+  }
+}
