@@ -2,6 +2,8 @@
 
 use Auryn\Injector;
 use Nessworthy\AoC2020\Common\Input;
+use Nessworthy\AoC2020\Solutions\DayFourPartOne;
+use Nessworthy\AoC2020\Solutions\DayFourPartTwo;
 use Nessworthy\AoC2020\Solutions\DayOnePartOne;
 use Nessworthy\AoC2020\Solutions\DayOnePartTwo;
 use Nessworthy\AoC2020\Solutions\DayThreePartOne;
@@ -24,6 +26,7 @@ $injector->define(Input::class, [
         '1a', '1b' => __DIR__ . '/../input/1a.txt',
         '2a', '2b' => __DIR__ . '/../input/2a.txt',
         '3a', '3b' => __DIR__ . '/../input/3a.txt',
+        '4a', '4b' => __DIR__ . '/../input/4a.txt',
         default => throw new RuntimeException('Expected valid solution, none given.')
     }
 ]);
@@ -35,6 +38,8 @@ $solution = $injector->make(match($solve) {
     '2b' => DayTwoPartTwo::class,
     '3a' => DayThreePartOne::class,
     '3b' => DayThreePartTwo::class,
+    '4a' => DayFourPartOne::class,
+    '4b' => DayFourPartTwo::class,
     default => throw new Exception('No solution defined.')
 });
 $injector->execute([$solution, 'execute']);
