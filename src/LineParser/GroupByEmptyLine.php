@@ -14,6 +14,7 @@ class GroupByEmptyLine
             if (empty($line)) {
                 yield $collected;
                 $collected = [];
+                continue;
             }
             $collected[] = $line;
         }
