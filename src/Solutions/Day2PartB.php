@@ -6,7 +6,7 @@ use Nessworthy\AoC2020\Common\Input;
 use Nessworthy\AoC2020\Common\Output;
 use Nessworthy\AoC2020\LineParser\PasswordPolicy;
 
-class DayTwoPartTwo implements Solution
+class Day2PartB implements Solution
 {
 
     public function __construct(private PasswordPolicy $passwordPolicyParser)

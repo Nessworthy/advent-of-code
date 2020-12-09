@@ -5,7 +5,7 @@ namespace Nessworthy\AoC2020\Solutions;
 use Nessworthy\AoC2020\Common\Input;
 use Nessworthy\AoC2020\Common\Output;
 
-class DayThreePartTwo implements Solution
+class Day3PartB implements Solution
 {
 
     private const TREE = '#';

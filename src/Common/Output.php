@@ -15,6 +15,6 @@ class Output
 
     public function writeLine(string $str): void
     {
-        $this->write("\n" . $str);
+        $this->write($str . "\n");
     }
 }

@@ -2,15 +2,6 @@
 
 use Auryn\Injector;
 use Nessworthy\AoC2020\Common\Input;
-use Nessworthy\AoC2020\Solutions\DayFourPartOne;
-use Nessworthy\AoC2020\Solutions\DayFourPartTwo;
-use Nessworthy\AoC2020\Solutions\DayOnePartOne;
-use Nessworthy\AoC2020\Solutions\DayOnePartTwo;
-use Nessworthy\AoC2020\Solutions\DayThreePartOne;
-use Nessworthy\AoC2020\Solutions\DayThreePartTwo;
-use Nessworthy\AoC2020\Solutions\DayTwoPartOne;
-use Nessworthy\AoC2020\Solutions\DayTwoPartTwo;
-
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $solve = $argv[1] ?? null;
@@ -22,25 +13,11 @@ $injector = new Injector();
 $injector->share($injector); // #yolo
 
 $injector->define(Input::class, [
-    ':filePath' => match($solve) {
-        '1a', '1b' => __DIR__ . '/../input/1a.txt',
-        '2a', '2b' => __DIR__ . '/../input/2a.txt',
-        '3a', '3b' => __DIR__ . '/../input/3a.txt',
-        '4a', '4b' => __DIR__ . '/../input/4a.txt',
-        default => throw new RuntimeException('Expected valid solution, none given.')
-    }
+    ':filePath' => __DIR__ . '/../input/' . $solve[0] . 'a.txt'
 ]);
 
-$solution = $injector->make(match($solve) {
-    '1a' => DayOnePartOne::class,
-    '1b' => DayOnePartTwo::class,
-    '2a' => DayTwoPartOne::class,
-    '2b' => DayTwoPartTwo::class,
-    '3a' => DayThreePartOne::class,
-    '3b' => DayThreePartTwo::class,
-    '4a' => DayFourPartOne::class,
-    '4b' => DayFourPartTwo::class,
-    default => throw new Exception('No solution defined.')
-});
+$className = sprintf('Day%dPart%s', (int) $solve[0], strtoupper($solve[1]));
+
+$solution = $injector->make('Nessworthy\AoC2020\Solutions\\' . $className);
 $injector->execute([$solution, 'execute']);
 

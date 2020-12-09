@@ -7,7 +7,7 @@ use Nessworthy\AoC2020\Common\Output;
 use Nessworthy\AoC2020\LineParser\PassportScanner;
 use Nessworthy\AoC2020\Validator\PassportChecker;
 
-class DayFourPartTwo implements Solution
+class Day4PartB implements Solution
 {
     public function __construct(private PassportScanner $passportScanner, private PassportChecker $passportChecker)
     {

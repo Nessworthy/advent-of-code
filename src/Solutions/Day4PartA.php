@@ -6,7 +6,7 @@ use Nessworthy\AoC2020\Common\Input;
 use Nessworthy\AoC2020\Common\Output;
 use Nessworthy\AoC2020\LineParser\PassportScanner;
 
-class DayFourPartOne implements Solution
+class Day4PartA implements Solution
 {
 
     /**

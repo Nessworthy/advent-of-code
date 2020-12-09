@@ -5,7 +5,7 @@ namespace Nessworthy\AoC2020\Solutions;
 use Nessworthy\AoC2020\Common\Input;
 use Nessworthy\AoC2020\Common\Output;
 
-class DayOnePartTwo implements Solution
+class Day1PartB implements Solution
 {
     public function execute(Input $input, Output $output): void
     {
