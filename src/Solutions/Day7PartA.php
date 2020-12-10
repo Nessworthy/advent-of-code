@@ -12,7 +12,7 @@ class Day7PartA implements Solution
     {
     }
 
-    public function execute(Input $input, Output $output): void
+    public function execute(Input $input, Output $output): int|string
     {
         $rules = [];
         $ruleCapture = '#^(?<modifier>\w+) (?<color>\w+) bags contain (?<contains>[^\.]+)\.$#';
@@ -40,7 +40,7 @@ class Day7PartA implements Solution
 
         $seen = $this->recurseThroughSeenBags([], 'shiny gold', $rules);
         $output->writeLine((string) (count($seen)));
-
+        return count($seen);
     }
 
     private function recurseThroughSeenBags(array $seen, string $current, &$rules): array

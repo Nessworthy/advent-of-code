@@ -12,7 +12,7 @@ class Day7PartB implements Solution
     {
     }
 
-    public function execute(Input $input, Output $output): void
+    public function execute(Input $input, Output $output): int|string
     {
         /**
          * Node traversal & child count caching probably trumps all here,
@@ -46,9 +46,9 @@ class Day7PartB implements Solution
         $output->writeLine(sprintf('%d unique bag rules loaded', count($rules)));
 
         $scores = [];
-        $seen = $this->recurseThroughSeenBags([], 'shiny gold', $rules, $scores);
+        $this->recurseThroughSeenBags([], 'shiny gold', $rules, $scores);
         $output->writeLine((string) ($scores['shiny gold']));
-
+        return $scores['shiny gold'];
     }
 
     private function recurseThroughSeenBags(array $seen, string $current, &$rules, &$scores): array

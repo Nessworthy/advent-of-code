@@ -12,7 +12,7 @@ class Day5PartA implements Solution
     {
     }
 
-    public function execute(Input $input, Output $output): void
+    public function execute(Input $input, Output $output): int|string
     {
         $highest = 0;
         foreach ($input->readLine() as $line) {
@@ -22,5 +22,6 @@ class Day5PartA implements Solution
             }
         }
         $output->write((string) $highest);
+        return $highest;
     }
 }

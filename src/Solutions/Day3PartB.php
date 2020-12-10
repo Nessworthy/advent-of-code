@@ -14,7 +14,7 @@ class Day3PartB implements Solution
     {
     }
 
-    public function execute(Input $input, Output $output): void
+    public function execute(Input $input, Output $output): int|string
     {
         $output->write((string) (
             $this->fetchNumberOfTreesHit(1, 1, $input) *

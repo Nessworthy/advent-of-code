@@ -19,7 +19,7 @@ class Day4PartA implements Solution
         $this->passportScanner = $passportScanner;
     }
 
-    public function execute(Input $input, Output $output): void
+    public function execute(Input $input, Output $output): int|string
     {
         $requiredFields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']; // 'cid'
         sort($requiredFields);
@@ -31,5 +31,6 @@ class Day4PartA implements Solution
             }
         }
         $output->write((string) $valid);
+        return $valid;
     }
 }

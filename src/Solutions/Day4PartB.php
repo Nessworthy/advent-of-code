@@ -13,12 +13,13 @@ class Day4PartB implements Solution
     {
     }
 
-    public function execute(Input $input, Output $output): void
+    public function execute(Input $input, Output $output): int|string
     {
         $valid = 0;
         foreach ($this->passportScanner->scanInput($input) as $passport) {
             $valid += $this->passportChecker->validate($passport) ? 1 : 0;
         }
         $output->write((string) $valid);
+        return $valid;
     }
 }

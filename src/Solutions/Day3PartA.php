@@ -15,7 +15,7 @@ class Day3PartA implements Solution
     {
     }
 
-    public function execute(Input $input, Output $output): void
+    public function execute(Input $input, Output $output): int|string
     {
         $trees = 0;
         $xPosition = 0;
@@ -27,6 +27,7 @@ class Day3PartA implements Solution
             $xPosition += self::HORIZONTAL_MOVE;
         }
         $output->writeLine((string) $trees);
+        return $trees;
     }
 
     private function isTreeAt(string $line, int $position): bool

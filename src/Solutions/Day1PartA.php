@@ -4,10 +4,11 @@ namespace Nessworthy\AoC2020\Solutions;
 
 use Nessworthy\AoC2020\Common\Input;
 use Nessworthy\AoC2020\Common\Output;
+use RuntimeException;
 
 class Day1PartA implements Solution
 {
-    public function execute(Input $input, Output $output): void
+    public function execute(Input $input, Output $output): int|string
     {
         $output->write('Hello world!');
         $numbers = [];
@@ -19,12 +20,13 @@ class Day1PartA implements Solution
                     $output->writeLine((string) $number);
                     $output->writeLine((string) $prevNumber);
                     $output->writeLine((string) ($number * $prevNumber));
-                    break 2;
+                    return $number * $prevNumber;
                 }
             }
 
             $numbers[] = (int) $line;
         }
+        throw new RuntimeException('Answer not found.');
     }
 
 }

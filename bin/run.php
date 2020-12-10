@@ -19,5 +19,6 @@ $injector->define(Input::class, [
 $className = sprintf('Day%dPart%s', (int) $solve[0], strtoupper($solve[1]));
 
 $solution = $injector->make('Nessworthy\AoC2020\Solutions\\' . $className);
-$injector->execute([$solution, 'execute']);
+$result = $injector->execute([$solution, 'execute']);
+echo 'Answer given: ' . "\n" . '(' . gettype($result) . ') ' . $result;
 

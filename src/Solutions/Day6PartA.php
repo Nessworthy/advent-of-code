@@ -13,12 +13,13 @@ class Day6PartA implements Solution
     {
     }
 
-    public function execute(Input $input, Output $output): void
+    public function execute(Input $input, Output $output): int|string
     {
         $totalUniqueAnswers = 0;
         foreach ($this->groupByEmptyLine->parse($input) as $group) {
             $totalUniqueAnswers += count(array_unique(str_split(implode('', $group))));
         }
         $output->write((string) $totalUniqueAnswers);
+        return $totalUniqueAnswers;
     }
 }

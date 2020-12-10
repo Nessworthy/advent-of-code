@@ -13,7 +13,7 @@ class Day2PartB implements Solution
     {
     }
 
-    public function execute(Input $input, Output $output): void
+    public function execute(Input $input, Output $output): int|string
     {
         $correct = 0;
         foreach ($input->readLine() as $line) {
@@ -25,6 +25,7 @@ class Day2PartB implements Solution
         }
 
         $output->write((string) $correct);
+        return $correct;
     }
 
 }

@@ -13,12 +13,13 @@ class Day6PartB implements Solution
     {
     }
 
-    public function execute(Input $input, Output $output): void
+    public function execute(Input $input, Output $output): int|string
     {
         $totalSharedAnswers = 0;
         foreach ($this->groupByEmptyLine->parse($input) as $group) {
             $totalSharedAnswers += count(array_intersect(...array_map('str_split', $group)));
         }
         $output->write((string) $totalSharedAnswers);
+        return $totalSharedAnswers;
     }
 }

@@ -7,5 +7,5 @@ use Nessworthy\AoC2020\Common\Output;
 
 interface Solution
 {
-    public function execute(Input $input, Output $output): void;
+    public function execute(Input $input, Output $output): int|string;
 }
