@@ -12,11 +12,14 @@ $injector = new Injector();
 
 $injector->share($injector); // #yolo
 
+$matches = [];
+preg_match('#^(?<day>\d+)(?<part>\w+)$#', $solve, $matches);
+
 $injector->define(Input::class, [
-    ':filePath' => __DIR__ . '/../input/' . $solve[0] . 'a.txt'
+    ':filePath' => __DIR__ . '/../input/' . $matches['day'] . 'a.txt'
 ]);
 
-$className = sprintf('Day%dPart%s', (int) $solve[0], strtoupper($solve[1]));
+$className = sprintf('Day%dPart%s', (int) $matches['day'], strtoupper($matches['part']));
 
 $solution = $injector->make('Nessworthy\AoC2020\Solutions\\' . $className);
 $result = $injector->execute([$solution, 'execute']);

@@ -17,7 +17,6 @@ class Input
 
     public function readLine(): Generator
     {
-
         while ($line = fgets($this->res)) {
             $line = trim($line);
             yield $line;
