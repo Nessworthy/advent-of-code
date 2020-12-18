@@ -8,20 +8,21 @@ use Nessworthy\AoC2020\Common\Output;
 
 class FerrySeats
 {
-    private array $empty = [];
-    private array $filled = [];
-    private int $width;
-    private int $height;
+    protected array $empty = [];
+    protected array $filled = [];
+    protected int $width;
+    protected int $height;
     private int $pass = 0;
 
-    private const SEAT_FILLED = '#';
-    private const SEAT_EMPTY = 'L';
-    private const SEAT_NONEXISTENT = '.';
+    protected const SEAT_FILLED = '#';
+    protected const SEAT_EMPTY = 'L';
+    protected const SEAT_NONEXISTENT = '.';
 
     /**
      * @var Output
      */
     private Output $output;
+    protected int $humanTolerance = 4;
 
     public function process(Input $input, Output $output): void
     {
@@ -81,7 +82,7 @@ class FerrySeats
                 if (isset($this->filled[$adjacentPosition])) {
                     ++$occupied;
 
-                    if ($occupied >= 4) {
+                    if ($occupied >= $this->humanTolerance) {
                         unset($filled[$position]);
                         $empty[$position] = true;
                         continue 2;
@@ -118,7 +119,7 @@ class FerrySeats
         return $result;
     }
 
-    private function getAdjacentPositions(int $index): Generator {
+    protected function getAdjacentPositions(int $index): Generator {
 
         $yPos = $index === 0 ? 0 : (int) floor($index / $this->width);
         $xPos = $index % $this->width;
