@@ -11,7 +11,8 @@
   ],
   "require": {
     "rdlowrey/auryn": "^1.4",
-    "ext-json": "*"
+    "ext-json": "*",
+    "ext-gmp": "*"
   },
   "autoload": {
     "psr-4": {
