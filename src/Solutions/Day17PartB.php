@@ -4,18 +4,18 @@ namespace Nessworthy\AoC2020\Solutions;
 
 use Nessworthy\AoC2020\Common\Input;
 use Nessworthy\AoC2020\Common\Output;
-use Nessworthy\AoC2020\Grid\ConwayCube3D;
+use Nessworthy\AoC2020\Grid\ConwayCube4D;
 
-class Day17PartA implements Solution
+class Day17PartB implements Solution
 {
     public function execute(Input $input, Output $output): int|string
     {
-        $grid = new ConwayCube3D();
+        $grid = new ConwayCube4D();
 
         foreach ($input->readLine() as $y => $line) {
             foreach (str_split($line) as $x => $char) {
                 if ($char === '#') {
-                    $grid->setActive((int) $x, (int) $y, 0);
+                    $grid->setActive((int) $x, (int) $y, 0, 0);
                 }
             }
         }
@@ -42,7 +42,6 @@ class Day17PartA implements Solution
                     $newGrid->setActive(...$inactivePoint);
                 }
             }
-
             $grid = $newGrid;
         }
 

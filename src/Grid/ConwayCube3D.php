@@ -3,9 +3,8 @@
 namespace Nessworthy\AoC2020\Grid;
 
 use Generator;
-use JetBrains\PhpStorm\Pure;
 
-class ConwayCube
+class ConwayCube3D
 {
     /**
      * Just some notes..

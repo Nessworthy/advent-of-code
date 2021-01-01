@@ -31,7 +31,31 @@ $injector->define(Input::class, [
 $className = sprintf('Day%dPart%s', (int) $matches['day'], strtoupper($matches['part']));
 
 $solution = $injector->make('Nessworthy\AoC2020\Solutions\\' . $className);
+
+$start = microtime(true);
+
 $result = $injector->execute([$solution, 'execute']);
+
+$end = microtime(true);
+$taken = $end - $start;
+
+$minutes = floor(floor($taken) / 60);
+$seconds = floor($taken) - ($minutes * 60);
+$milliseconds = floor(($taken - $seconds) * 1000);
+
+$timeStr = '';
+$color = SGR::COLOR_FG_WHITE;
+
+if ($minutes) {
+    $timeStr = sprintf('%dm %ds', $minutes, $seconds);
+    $color = SGR::COLOR_FG_RED;
+} elseif ($seconds) {
+    $timeStr = sprintf('%d.%ds', $seconds, $milliseconds);
+    $color = SGR::COLOR_FG_YELLOW;
+} elseif ($milliseconds) {
+    $timeStr = sprintf('%dms', $milliseconds);
+    $color = SGR::COLOR_FG_GREEN;
+}
 
 $output = trim(file_get_contents(__DIR__ . '/../test/output/' . $matches['day'] . strtolower($matches['part']) . '.txt'));
 
@@ -40,13 +64,20 @@ $writer = new OutputWriterAdapter($injector->make(Output::class));
 
 $ansi = new Ansi($writer);
 
-$ansi->lf()->bold()->text('Test results for Day ' . $matches['day'] . ', part ' . strtoupper($matches['part']))->nostyle()->lf()->lf();
+$ansi
+    ->lf()
+    ->bold()
+    ->text('Test results for ')
+    ->color(SGR::COLOR_FG_YELLOW)
+    ->text('day ' . $matches['day'] . ', part ' . strtoupper($matches['part']))->nostyle()->text(':')->lf()->lf();
 
 $ansi->text('Answer expected: ' . $output)->lf();
 
 $ansi->text('   Answer given: ')
     ->color($output === (string) $result ? SGR::COLOR_FG_GREEN : SGR::COLOR_FG_RED)->text($result)
-    ->nostyle()->lf();
+    ->nostyle()->lf()->lf();
+
+$ansi->text('     Time taken: ')->color($color)->text($timeStr)->lf();
 
 
 
