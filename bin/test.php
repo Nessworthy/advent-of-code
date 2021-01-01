@@ -55,6 +55,9 @@ if ($minutes) {
 } elseif ($milliseconds) {
     $timeStr = sprintf('%dms', $milliseconds);
     $color = SGR::COLOR_FG_GREEN;
+} else {
+    $color = SGR::COLOR_FG_CYAN;
+    $timeStr = sprintf('%dµs', floor(($taken * 1000 * 1000) - floor($taken * 1000) * 1000));
 }
 
 $output = trim(file_get_contents(__DIR__ . '/../test/output/' . $matches['day'] . strtolower($matches['part']) . '.txt'));
