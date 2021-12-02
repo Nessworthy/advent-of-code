@@ -1,0 +1,6 @@
+<?php declare(strict_types=1);
+
+const YEAR_MAP = [
+    '2020' => 'TwentyTwenty',
+    '2021' => 'TwentyTwentyOne'
+];

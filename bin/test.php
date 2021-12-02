@@ -3,10 +3,9 @@
 use Auryn\Injector;
 use Bramus\Ansi\Ansi;
 use Bramus\Ansi\ControlSequences\EscapeSequences\Enums\SGR;
-use Bramus\Ansi\Writers\StreamWriter;
-use Nessworthy\AoC2020\Common\Input;
-use Nessworthy\AoC2020\Common\Output;
-use Nessworthy\AoC2020\Common\OutputWriterAdapter;
+use Nessworthy\AoC\Common\Input;
+use Nessworthy\AoC\Common\Output;
+use Nessworthy\AoC\Common\OutputWriterAdapter;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -22,19 +21,40 @@ $injector->share(Output::class);
 $injector->share(Input::class);
 
 $matches = [];
-preg_match('#^Day(?<day>\d+)Part(?<part>\w+)$#', $solve, $matches);
+preg_match('#^Year(?<year>.+?)Day(?<day>\d+)Part(?<part>\w+)$#', $solve, $matches);
+
+$yearNumeric = array_search($matches['year'], YEAR_MAP, true);
+
+$inputFilePath = __DIR__ . '/../test/input/' . $yearNumeric . '/' . $matches['day'] . '.txt';
+$outputFilePath = __DIR__ . '/../test/output/' . $yearNumeric . '/' . $matches['day'] . strtolower($matches['part']) . '.txt';
+
+if (!file_exists($inputFilePath)) {
+    /** @var Output $writer */
+    $writer = new OutputWriterAdapter($injector->make(Output::class));
+    $ansi = new Ansi($writer);
+    $ansi->text('Skipping tests (no input file found)');
+    exit(0);
+}
+
+if (!file_exists($outputFilePath)) {
+    /** @var Output $writer */
+    $writer = new OutputWriterAdapter($injector->make(Output::class));
+    $ansi = new Ansi($writer);
+    $ansi->text('Skipping tests (no output file found)');
+    exit(0);
+}
 
 $injector->define(Input::class, [
-    ':filePath' => __DIR__ . '/../test/input/' . $matches['day'] . '.txt'
+    ':filePath' => $inputFilePath
 ]);
 
 $className = sprintf('Day%dPart%s', (int) $matches['day'], strtoupper($matches['part']));
 
-$solution = $injector->make('Nessworthy\AoC2020\Solutions\\' . $className);
+$solution = $injector->make(sprintf('Nessworthy\AoC\Solutions\%s\%s', $matches['year'], $className));
 
 $start = microtime(true);
 
-$result = $injector->execute([$solution, 'execute']);
+$result = $injector->execute([$solution, 'solve']);
 
 $end = microtime(true);
 $taken = $end - $start;
@@ -60,7 +80,7 @@ if ($minutes) {
     $timeStr = sprintf('%dµs', floor(($taken * 1000 * 1000) - floor($taken * 1000) * 1000));
 }
 
-$output = trim(file_get_contents(__DIR__ . '/../test/output/' . $matches['day'] . strtolower($matches['part']) . '.txt'));
+$output = trim(file_get_contents($outputFilePath));
 
 /** @var Output $writer */
 $writer = new OutputWriterAdapter($injector->make(Output::class));

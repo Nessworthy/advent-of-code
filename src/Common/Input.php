@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Nessworthy\AoC2020\Common;
+namespace Nessworthy\AoC\Common;
 
 use Generator;
 

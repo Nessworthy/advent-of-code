@@ -16,9 +16,10 @@
   },
   "autoload": {
     "psr-4": {
-      "Nessworthy\\AoC2020\\": "src/"
+      "Nessworthy\\AoC\\": "src/"
     },
     "files": [
+      "src/ref.php",
       "src/functions.php"
     ]
   },

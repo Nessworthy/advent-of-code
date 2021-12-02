@@ -13,3 +13,11 @@ function curry(callable $callback, ...$initialArgs): callable {
 function toInt($var): int {
     return (int) $var;
 }
+
+function generator_reduce(Generator $generator, callable $callback, $initial = null) {
+    $return = $initial;
+    foreach ($generator as $item) {
+        $return = $callback($return, $item);
+    }
+    return $return;
+}

@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Nessworthy\AoC2020\Solutions;
+namespace Nessworthy\AoC\Solutions;
 
-use Nessworthy\AoC2020\Common\Input;
-use Nessworthy\AoC2020\Common\Output;
+use Nessworthy\AoC\Common\Input;
+use Nessworthy\AoC\Common\Output;
 
 interface Solution
 {
-    public function execute(Input $input, Output $output): int|string;
+    public function solve(Input $input, Output $output): int|string;
 }
