@@ -7,7 +7,7 @@ use Nessworthy\AoC\Solutions\Solution;
 use Nessworthy\AoC\Common\Input;
 use Nessworthy\AoC\Common\Output;
 
-class Day1PartB implements Solution
+class Day01PartB implements Solution
 {
     private const READS_PER_GROUP = 3;
 

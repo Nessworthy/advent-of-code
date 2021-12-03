@@ -48,7 +48,7 @@ $injector->define(Input::class, [
     ':filePath' => $inputFilePath
 ]);
 
-$className = sprintf('Day%dPart%s', (int) $matches['day'], strtoupper($matches['part']));
+$className = sprintf('Day%sPart%s', $matches['day'], strtoupper($matches['part']));
 
 $solution = $injector->make(sprintf('Nessworthy\AoC\Solutions\%s\%s', $matches['year'], $className));
 

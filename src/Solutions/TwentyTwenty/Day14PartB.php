@@ -2,6 +2,7 @@
 
 namespace Nessworthy\AoC\Solutions\TwentyTwenty;
 
+use Generator;
 use Nessworthy\AoC\Common\Input;
 use Nessworthy\AoC\Common\Output;
 use Nessworthy\AoC\Solutions\Solution;

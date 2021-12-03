@@ -6,7 +6,7 @@ use Nessworthy\AoC\Solutions\Solution;
 use Nessworthy\AoC\Common\Input;
 use Nessworthy\AoC\Common\Output;
 
-class Day1PartA implements Solution
+class Day01PartA implements Solution
 {
     public function solve(Input $input, Output $output): int|string
     {
