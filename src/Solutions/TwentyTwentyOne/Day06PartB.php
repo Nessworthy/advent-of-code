@@ -5,40 +5,20 @@ namespace Nessworthy\AoC\Solutions\TwentyTwentyOne;
 use Nessworthy\AoC\Solutions\Solution;
 use Nessworthy\AoC\Common\Input;
 use Nessworthy\AoC\Common\Output;
+use Nessworthy\AoC\TwentyTwentyOne\LanternFishCounter;
 
 class Day06PartB implements Solution
 {
+    private LanternFishCounter $lanternFishCounter;
+
+    public function __construct(LanternFishCounter $lanternFishCounter)
+    {
+        $this->lanternFishCounter = $lanternFishCounter;
+    }
+
     public function solve(Input $input, Output $output): int|string
     {
-        $days = 256;
-        $day = 0;
-
-        $newFish = [0,0,0,0,0,0,0,0,0];
-        $fish    = [0,0,0,0,0,0,0];
-
-        foreach (array_map('toInt', explode(',', $input->readLine()->current())) as $startingFish) {
-            ++$fish[$startingFish + 1];
-        }
-
-        while ($day <= $days) {
-            $newFishIndex = $day % 9;
-            $fishIndex = $day % 7;
-
-            $fishToAdd = 0;
-
-            if ($newFish[$newFishIndex] > 0) {
-                $fishToAdd = $newFish[$newFishIndex];
-            }
-
-            if ($fish[$fishIndex] > 0) {
-                $newFish[$newFishIndex] += $fish[$fishIndex];
-            }
-
-            $fish[$fishIndex] += $fishToAdd;
-
-            ++$day;
-        }
-
-        return array_sum($newFish) + array_sum($fish);
+        $fish = array_map('toInt', explode(',', $input->readLine()->current()));
+        return $this->lanternFishCounter->countFishAfterDays($fish, 256);
     }
 }
