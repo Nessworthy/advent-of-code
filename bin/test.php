@@ -44,6 +44,13 @@ if (!file_exists($outputFilePath)) {
     exit(0);
 }
 
+/** @var Output $writer */
+$writer = new OutputWriterAdapter($injector->make(Output::class));
+
+$ansi = new Ansi($writer);
+
+$injector->share($ansi);
+
 $injector->define(Input::class, [
     ':filePath' => $inputFilePath
 ]);
@@ -81,11 +88,6 @@ if ($minutes) {
 }
 
 $output = trim(file_get_contents($outputFilePath));
-
-/** @var Output $writer */
-$writer = new OutputWriterAdapter($injector->make(Output::class));
-
-$ansi = new Ansi($writer);
 
 $ansi
     ->lf()
