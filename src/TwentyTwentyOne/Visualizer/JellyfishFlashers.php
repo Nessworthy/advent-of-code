@@ -3,7 +3,6 @@
 namespace Nessworthy\AoC\TwentyTwentyOne\Visualizer;
 
 use Bramus\Ansi\Ansi;
-use Bramus\Ansi\Traits\EscapeSequences\SGR;
 
 class JellyfishFlashers
 {
