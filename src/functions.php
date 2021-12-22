@@ -10,6 +10,12 @@ function curry(callable $callback, ...$initialArgs): callable {
     };
 }
 
+function rcurry(callable $callback, ...$finalArgs): callable {
+    return static function (...$args) use ($callback, $finalArgs) {
+        return call_user_func_array($callback, array_merge($args, $finalArgs));
+    };
+}
+
 function toInt($var): int {
     return (int) $var;
 }

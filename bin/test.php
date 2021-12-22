@@ -89,6 +89,9 @@ if ($minutes) {
 
 $output = trim(file_get_contents($outputFilePath));
 
+$result = str_replace("\r\n", "\n", (string) $result);
+$output = str_replace("\r\n", "\n", $output);
+
 $ansi
     ->lf()
     ->bold()
@@ -96,13 +99,13 @@ $ansi
     ->color(SGR::COLOR_FG_YELLOW)
     ->text('day ' . $matches['day'] . ', part ' . strtoupper($matches['part']))->nostyle()->text(':')->lf()->lf();
 
-$ansi->text('Answer expected: ' . $output)->lf();
+$ansi->text('Answer expected: ')->lf()->text($output)->lf();
 
-$ansi->text('   Answer given: ')
+$ansi->text('Answer given: ')->lf()
     ->color($output === (string) $result ? SGR::COLOR_FG_GREEN : SGR::COLOR_FG_RED)->text($result)
     ->nostyle()->lf()->lf();
 
-$ansi->text('     Time taken: ')->color($color)->text($timeStr)->lf();
+$ansi->text('Time taken: ')->color($color)->text($timeStr)->lf();
 
 
 
