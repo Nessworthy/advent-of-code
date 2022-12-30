@@ -25,6 +25,14 @@ preg_match('#^Year(?<year>.+?)Day(?<day>\d+)Part(?<part>\w+)$#', $solve, $matche
 
 $yearNumeric = array_search($matches['year'], YEAR_MAP, true);
 
+if (!$yearNumeric) {
+    /** @var Output $writer */
+    $writer = new OutputWriterAdapter($injector->make(Output::class));
+    $ansi = new Ansi($writer);
+    $ansi->text('Skipping tests (year "' . $yearNumeric . '" not found in refs.php)');
+    exit(0);
+}
+
 $inputFilePath = __DIR__ . '/../test/input/' . $yearNumeric . '/' . $matches['day'] . '.txt';
 $outputFilePath = __DIR__ . '/../test/output/' . $yearNumeric . '/' . $matches['day'] . strtolower($matches['part']) . '.txt';
 
@@ -32,7 +40,7 @@ if (!file_exists($inputFilePath)) {
     /** @var Output $writer */
     $writer = new OutputWriterAdapter($injector->make(Output::class));
     $ansi = new Ansi($writer);
-    $ansi->text('Skipping tests (no input file found)');
+    $ansi->text('Skipping tests (no input file found, looking for "' . $inputFilePath . '")');
     exit(0);
 }
 
@@ -99,7 +107,7 @@ $ansi
     ->color(SGR::COLOR_FG_YELLOW)
     ->text('day ' . $matches['day'] . ', part ' . strtoupper($matches['part']))->nostyle()->text(':')->lf()->lf();
 
-$ansi->text('Answer expected: ')->lf()->text($output)->lf();
+$ansi->text('Answer expected: ')->lf()->text($output === '' ? '(Empty string)' : $output)->lf()->lf();
 
 $ansi->text('Answer given: ')->lf()
     ->color($output === (string) $result ? SGR::COLOR_FG_GREEN : SGR::COLOR_FG_RED)->text($result)
