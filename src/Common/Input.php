@@ -18,7 +18,14 @@ class Input
     public function readLine(): Generator
     {
         while ($line = fgets($this->res)) {
-            $line = trim($line);
+            $line = rtrim($line, "\r\n");
+            yield $line;
+        }
+    }
+
+    public function readCharacters(int $chunkSize = 2): Generator
+    {
+        while ($line = fgets($this->res, $chunkSize)) {
             yield $line;
         }
     }
