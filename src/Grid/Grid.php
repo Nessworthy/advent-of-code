@@ -41,6 +41,12 @@ class Grid {
         return $this->gridByRows[$y];
     }
 
+    public function getRows(): \Generator {
+        for ($i = 0; $i < $this->getHeight(); $i++) {
+            yield $i => $this->getRow($i);
+        }
+    }
+
     public function getColumn(int $x): array {
         return $this->gridByColumns[$x];
     }
@@ -63,5 +69,28 @@ class Grid {
     public function getHeight(): int
     {
         return $this->height;
+    }
+
+    public function getSliceFromCenter(Point2D $point, $radius = 1): Grid {
+        $slice = [];
+
+        $fromX = max($point->x() - $radius, 0);
+        $fromY = max($point->y() - $radius, 0);
+        $toX = min($point->x() + $radius, $this->getWidth() - $radius);
+        $toY = min($point->y() + $radius, $this->getHeight() - $radius);
+
+        for ($y = $fromY; $y <= $toY; $y++) {
+            $slice[] = array_slice($this->gridByRows[$y], $fromX, 1 + $toX - $fromX);
+        }
+
+        return new Grid($slice);
+    }
+
+    public function traverseFromTopLeft(): \Generator {
+        foreach ($this->getRows() as $y => $row) {
+            foreach ($row as $x => $value) {
+                yield new Point2D($x, $y) => $value;
+            }
+        }
     }
 }
