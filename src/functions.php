@@ -27,3 +27,7 @@ function generator_reduce(Generator $generator, callable $callback, $initial = n
     }
     return $return;
 }
+
+function difference(int $a, int $b) {
+    return abs($a - $b);
+}
