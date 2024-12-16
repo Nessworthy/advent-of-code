@@ -3,6 +3,7 @@
 namespace Nessworthy\AoC\Grid;
 
 use Nessworthy\AoC\Coordinates\Point2D;
+use Nessworthy\AoC\Coordinates\Point2DHelper;
 
 class Grid {
     /**
@@ -71,6 +72,24 @@ class Grid {
         return $this->height;
     }
 
+    public function getSlice(Point2D $point, GridDirection $direction, int $length) {
+        $collected = [];
+        $currentPoint = $point;
+        while ($length > 0) {
+            if (!$this->isPointInGrid($currentPoint)) {
+                return $collected;
+            }
+            $collected[] = $this->getByPoint($currentPoint);
+            $currentPoint = Point2DHelper::bump($currentPoint, $direction);
+            $length--;
+        }
+        return $collected;
+    }
+
+    public function isPointInGrid(Point2D $point): bool {
+        return between_inclusive($point->x(), 0, $this->getWidth() - 1) && between_inclusive($point->y(), 0, $this->getHeight() - 1);
+    }
+
     public function getSliceFromCenter(Point2D $point, $radius = 1): Grid {
         $slice = [];
 
@@ -92,5 +111,23 @@ class Grid {
                 yield new Point2D($x, $y) => $value;
             }
         }
+    }
+
+    public function findFirst(string|int $symbol): Point2D | null {
+        foreach ($this->traverseFromTopLeft() as $point => $value) {
+            if ($symbol === $value) {
+                return $point;
+            }
+        }
+        return null;
+    }
+
+    public function setValueAt(Point2D $point, string | int $value): Grid {
+        if (!$this->isPointInGrid($point)) {
+            throw new \RuntimeException('Tried to update a grid position that doesn\'t exist.');
+        }
+        $copy = $this->gridByRows;
+        $copy[$point->y()][$point->x()] = $value;
+        return new Grid($copy);
     }
 }

@@ -33,4 +33,9 @@ class Point2D
     {
         return $this->x . ',' . $this->y;
     }
+
+    public function is(Point2d $point2D): bool
+    {
+        return $this->x === $point2D->x() && $this->y === $point2D->y();
+    }
 }

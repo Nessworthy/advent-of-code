@@ -12,7 +12,9 @@
   "require": {
     "rdlowrey/auryn": "^1.4",
     "ext-json": "*",
-    "ext-gmp": "*"
+    "ext-gmp": "*",
+    "dotzero/brainfuck": "^1.1",
+    "twig/twig": "^3.16"
   },
   "autoload": {
     "psr-4": {

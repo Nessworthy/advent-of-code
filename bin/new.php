@@ -2,6 +2,8 @@
 
 use Auryn\Injector;
 use Nessworthy\AoC\Common\Output;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -37,6 +39,10 @@ function check_and_create_file(string $filePath) {
     }
 }
 
+function check_and_write_file(string $filePath, string $content) {
+    file_put_contents($filePath, $content);
+}
+
 $paddedDay = str_pad((string) $question, 2, '0', STR_PAD_LEFT);
 
 $injector = new Injector();
@@ -51,7 +57,7 @@ $output->writeLine('Checking input year..');
 check_and_create_dir(__DIR__ . '/../input/' . $year);
 
 $output->writeLine('Checking input file..');
-check_and_create_file(__DIR__ . '/../input/' . $year . '/' . $paddedDay . $part . '.txt');
+check_and_create_file(__DIR__ . '/../input/' . $year . '/' . $paddedDay . 'a.txt');
 
 $output->writeLine('Checking solutions year..');
 check_and_create_dir(__DIR__ . '/../src/Solutions/' . YEAR_MAP[$year]);
@@ -71,6 +77,17 @@ check_and_create_dir(sprintf('%s/../test/output/%s', __DIR__, $year));
 $output->writeLine('Checking test output file..');
 check_and_create_file(sprintf('%s/../test/output/%s/%s%s.txt', __DIR__, $year, $paddedDay, $part));
 
+$twigLoader = new FilesystemLoader(__DIR__ . '/../templates');
+$twig = new Environment($twigLoader);
+$template = $twig->load('Day.twig');
+$templateOutput = $template->render([
+    'day' => $paddedDay,
+    'year' => YEAR_MAP[$year],
+    'part' => strtoupper($part),
+]);
+
+$output->writeLine('Creating code template..');
+check_and_write_file(sprintf('%s/../src/Solutions/%s/Day%sPart%s.php', __DIR__, YEAR_MAP[$year], $paddedDay, strtoupper($part)), $templateOutput);
 
 $output->writeLine('Done!');
 exit(0);
