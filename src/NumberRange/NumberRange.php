@@ -5,6 +5,7 @@ namespace Nessworthy\AoC\NumberRange;
 class NumberRange {
     private int $from;
     private int $to;
+
     public function __construct(int $from, int $to) {
         // We're not monsters here.
         $this->from = min($from, $to);
@@ -28,6 +29,16 @@ class NumberRange {
     }
 
     /**
+     * Check whether this range can entirely fit within a given range.
+     * @param NumberRange $numberRange
+     * @return bool
+     */
+    public function inclusivelyFitsWithin(NumberRange $numberRange): bool {
+        return $numberRange->isInclusivelyBetween($this->from())
+            && $numberRange->isInclusivelyBetween($this->to());
+    }
+
+    /**
      * Merging cleanly means to merge without including any
      * additional numbers outside the two given ranges.
      */
@@ -38,5 +49,16 @@ class NumberRange {
     public function mergeWith(NumberRange $range): NumberRange {
         $collection = [$range->to(), $this->to, $range->from(), $this->from];
         return new NumberRange(min($collection), max($collection));
+    }
+
+    public function iterate(): \Generator {
+        for ($i = $this->from; $i <= $this->to; $i++) {
+            yield $i;
+        }
+    }
+
+    public function __toString(): string
+    {
+        return $this->from . '-' . $this->to;
     }
 }

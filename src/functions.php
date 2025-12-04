@@ -31,3 +31,7 @@ function generator_reduce(Generator $generator, callable $callback, $initial = n
 function difference(int $a, int $b) {
     return abs($a - $b);
 }
+
+function isEven(int $n): bool {
+    return $n % 2 === 0;
+}
