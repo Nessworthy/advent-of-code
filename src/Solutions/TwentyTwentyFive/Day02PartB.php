@@ -113,5 +113,3 @@ class Day02PartB implements Solution {
         return $invalidIdSum;
     }
 }
-// 46769308530 too high
-// 46769308485
