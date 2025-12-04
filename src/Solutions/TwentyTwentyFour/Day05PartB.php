@@ -97,7 +97,6 @@ class Day05PartB implements Solution {
             }
         }
 
-        // 2300 - too low
         return $score;
     }
 }

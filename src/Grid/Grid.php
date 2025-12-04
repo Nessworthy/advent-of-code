@@ -122,6 +122,14 @@ class Grid {
         return null;
     }
 
+    public function findAll(string|int $symbol): \Generator {
+        foreach ($this->traverseFromTopLeft() as $point => $value) {
+            if ($symbol === $value) {
+                yield $point;
+            }
+        }
+    }
+
     public function setValueAt(Point2D $point, string | int $value): Grid {
         if (!$this->isPointInGrid($point)) {
             throw new \RuntimeException('Tried to update a grid position that doesn\'t exist.');

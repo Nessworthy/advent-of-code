@@ -30,20 +30,20 @@ class Point2DHelper {
         throw new \RuntimeException('Invalid GridDirection');
     }
 
-    public static function getNeighbouringPoints(Point2D $point2D, $minX, $maxX, $minY, $maxY): Generator {
+    public static function getNeighbouringPoints(Point2D $point2D, $minX, $maxX, $minY, $maxY, $othogonalOnly = false): Generator {
         $canGoLeft = $point2D->x() - 1 >= $minX;
         $canGoRight = $point2D->x() + 1 <= $maxX;
         $canGoUp = $point2D->y() - 1 >= $minY;
         $canGoDown = $point2D->y() + 1 <= $maxY;
 
         if ($canGoUp) {
-            if ($canGoLeft) {
+            if ($canGoLeft && !$othogonalOnly) {
                 yield GridDirection::DIAGONAL_UP_LEFT => new Point2D($point2D->x() - 1, $point2D->y() - 1);
             }
 
             yield GridDirection::UP =>new Point2D($point2D->x(), $point2D->y() - 1);
 
-            if ($canGoRight) {
+            if ($canGoRight && !$othogonalOnly) {
                 yield GridDirection::DIAGONAL_UP_RIGHT =>new Point2D($point2D->x() + 1, $point2D->y() - 1);
             }
         }
@@ -57,13 +57,13 @@ class Point2DHelper {
         }
 
         if ($canGoDown) {
-            if ($canGoLeft) {
+            if ($canGoLeft && !$othogonalOnly) {
                 yield GridDirection::DIAGONAL_DOWN_LEFT =>new Point2D($point2D->x() - 1, $point2D->y() + 1);
             }
 
             yield GridDirection::DOWN => new Point2D($point2D->x(), $point2D->y() + 1);
 
-            if ($canGoRight) {
+            if ($canGoRight && !$othogonalOnly) {
                 yield GridDirection::DIAGONAL_DOWN_RIGHT => new Point2D($point2D->x() + 1, $point2D->y() + 1);
             }
         }

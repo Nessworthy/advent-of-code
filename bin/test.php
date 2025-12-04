@@ -68,6 +68,7 @@ $className = sprintf('Day%sPart%s', $matches['day'], strtoupper($matches['part']
 $solution = $injector->make(sprintf('Nessworthy\AoC\Solutions\%s\%s', $matches['year'], $className));
 
 $start = microtime(true);
+$at = (new DateTimeImmutable())->format('H:i:s');
 
 $result = $injector->execute([$solution, 'solve']);
 
@@ -113,7 +114,9 @@ $ansi->text('Answer given: ')->lf()
     ->color($output === (string) $result ? SGR::COLOR_FG_GREEN : SGR::COLOR_FG_RED)->text($result)
     ->nostyle()->lf()->lf();
 
-$ansi->text('Time taken: ')->color($color)->text($timeStr)->lf();
+$ansi->text('Time taken: ')->color($color)->text($timeStr)->noStyle()->lf();
+
+$ansi->text(' Tested at: ')->color(SGR::COLOR_FG_YELLOW)->text($at)->nostyle()->lf();
 
 
 
