@@ -23,14 +23,14 @@ class Input
         }
     }
 
-    public function readCharacters(int $chunkSize = 2): Generator
+    public function readCharacters(int $chunkSize = 1): Generator
     {
-        while ($line = fgets($this->res, $chunkSize)) {
+        while ($line = fgets($this->res, $chunkSize + 1)) {
             yield $line;
         }
     }
 
-    public function reset()
+    public function reset(): void
     {
         fseek($this->res, 0);
     }
@@ -59,5 +59,39 @@ class Input
             $chunk .= $char;
         }
         yield $chunk;
+    }
+
+    public function skipUntil(string $character): bool {
+        for ($char = fgetc($this->res); $char !== false; $char = fgetc($this->res)) {
+            if ($char === $character) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function skipCharacters(int $amount): bool {
+        if ($amount === 0) {
+            return true;
+        }
+        return !(fseek($this->res, $amount, SEEK_CUR));
+    }
+
+    public function readLastLine(): string {
+        if (fseek($this->res, -1, SEEK_END) !== 0) {
+            throw new \RuntimeException('Couldn\'t seek the EOF.');
+        }
+
+        $line = '';
+        $char = fgetc($this->res);
+        $offset = 0;
+
+        while ($char !== "\n" && $char !== false) {
+            $offset--;
+            fseek($this->res, $offset, SEEK_END);
+            $char = fgetc($this->res);
+            $line .= $char;
+        }
+        return trim(strrev($line), "\n");
     }
 }
