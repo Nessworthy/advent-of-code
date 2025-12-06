@@ -2,6 +2,7 @@
 
 namespace Nessworthy\AoC\Grid;
 
+use Nessworthy\AoC\Common\Input;
 use Nessworthy\AoC\Coordinates\Point2D;
 use Nessworthy\AoC\Coordinates\Point2DHelper;
 
@@ -36,6 +37,15 @@ class Grid {
         }
 
         $this->height = count($this->gridByRows);
+    }
+
+    public static function fromInput(Input $input): self {
+        return new self(
+            array_map(
+                static fn ($line) => str_split($line),
+                iterator_to_array($input->readLine())
+            )
+        );
     }
 
     public function getRow(int $y): array {
@@ -90,7 +100,7 @@ class Grid {
         return between_inclusive($point->x(), 0, $this->getWidth() - 1) && between_inclusive($point->y(), 0, $this->getHeight() - 1);
     }
 
-    public function getSliceFromCenter(Point2D $point, $radius = 1): Grid {
+    public function getSliceFromCenter(Point2D $point, int $radius = 1): GridSlice {
         $slice = [];
 
         $fromX = max($point->x() - $radius, 0);
@@ -102,7 +112,13 @@ class Grid {
             $slice[] = array_slice($this->gridByRows[$y], $fromX, 1 + $toX - $fromX);
         }
 
-        return new Grid($slice);
+        return new GridSlice(
+            $slice,
+            new Point2D(
+                $fromX,
+                $fromY
+            )
+        );
     }
 
     public function traverseFromTopLeft(): \Generator {
