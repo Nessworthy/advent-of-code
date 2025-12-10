@@ -6,6 +6,7 @@ use Bramus\Ansi\ControlSequences\EscapeSequences\Enums\SGR;
 use Nessworthy\AoC\Common\Input;
 use Nessworthy\AoC\Common\Output;
 use Nessworthy\AoC\Common\OutputWriterAdapter;
+use Nessworthy\AoC\Solutions\Context;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -19,6 +20,10 @@ $injector->share($injector); // #yolo
 
 $injector->share(Output::class);
 $injector->share(Input::class);
+
+// Context
+$context = new Context(true);
+$injector->share($context);
 
 $matches = [];
 preg_match('#^Year(?<year>.+?)Day(?<day>\d+)Part(?<part>\w+)$#', $solve, $matches);

@@ -38,4 +38,9 @@ class Point2D
     {
         return $this->x === $point2D->x() && $this->y === $point2D->y();
     }
+
+    public function getAreaBetween(Point2D $point): int {
+        return (1 + max($point->x(), $this->x) - min($point->x(), $this->x))
+            * (1 + max($point->y(), $this->y) - min($point->y(), $this->y));
+    }
 }

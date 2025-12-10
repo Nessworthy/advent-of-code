@@ -5,6 +5,7 @@ use Bramus\Ansi\Ansi;
 use Nessworthy\AoC\Common\Input;
 use Nessworthy\AoC\Common\Output;
 use Nessworthy\AoC\Common\OutputWriterAdapter;
+use Nessworthy\AoC\Solutions\Context;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -15,6 +16,10 @@ $solve = $argv[1] ?? null;
 $injector = new Injector();
 
 $injector->share($injector); // #yolo
+
+// Context
+$context = new Context(false);
+$injector->share($context);
 
 $matches = [];
 preg_match('#^(?<year>\d+)-(?<day>\d+)(?<part>\w+)$#', $solve, $matches);
